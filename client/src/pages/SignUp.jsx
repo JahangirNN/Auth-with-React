@@ -7,7 +7,8 @@ const SignUp = () => {
   const [error, SetError] = useState(false);
   const [loading, SetLoading] = useState(false);
   const [success, SetSuccess] = useState(false);
-  
+  const [passwordType, SetPasswordType] = useState('password');
+
   const handleFormData =(e)=>{
       SetFormData({...formData, [e.target.id]:e.target.value}
   )};
@@ -63,12 +64,23 @@ const SignUp = () => {
         id='email' className='bg-slate-100 p-3
         rounded-lg' 
         onChange={handleFormData}/>
+        
+        <div className='relative'>
+          <input type={passwordType} placeholder='Password'
+          id='password' className='py-3 px-4 block w-full bg-slate-100 p-3
+          rounded-lg' 
+          onChange={handleFormData}/>
 
-        <input type='password' placeholder='Password'
-        id='password' className='bg-slate-100 p-3
-        rounded-lg' 
-        onChange={handleFormData}/>
-
+          <input onClick={() => {
+            if(passwordType == 'password'){
+              SetPasswordType('text')
+            }
+            else {
+              SetPasswordType('password')
+            }
+          }} className='absolute top-5 end-5 ' type="checkbox"></input>
+        </div>
+        
         <button disabled={loading} className='bg-slate-700 text-white p-3
         rounded-lg uppercase hover:opacity-95
         disabled:opacity-60'>{loading? 'Loading...':'Sign-Up'}</button>
