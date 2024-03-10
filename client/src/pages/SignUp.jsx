@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import {Link} from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 const SignUp = () => {
 
   const [formData, SetFormData] = useState({});   
   const [error, SetError] = useState(false);
   const [loading, SetLoading] = useState(false);
-  const [success, SetSuccess] = useState(false);
   const [passwordType, SetPasswordType] = useState('password');
+  const navigate = useNavigate();
 
   const handleFormData =(e)=>{
       SetFormData({...formData, [e.target.id]:e.target.value}
@@ -31,16 +31,14 @@ const SignUp = () => {
       
       if(data.success === false){
         SetError(true);
-        SetSuccess(false);
         return;
       } 
       SetError(false);
-      SetSuccess(true);
+      navigate('/home')
     }
     catch(error){
       SetError(true);
       SetLoading(false);
-      SetSuccess(false);
     }
     
   }
@@ -103,15 +101,12 @@ const SignUp = () => {
         </Link>
       </div>
 
-      {error? <p className='font-semibold 
+      {error && <p className='font-semibold 
       text-red-800 mt-5'>
-      'Something went wrong!'</p> : success &&
-      <p className='font-semibold 
-      text-green-500 mt-5'>
-      User Created Successfully!</p> }  
+      'Something went wrong!'</p> }  
       
     </div>
   )
 }
 
-export default SignUp
+export default SignUp;
