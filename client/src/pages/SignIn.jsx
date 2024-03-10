@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { signInStart,signInSuccess, singInFailure } from '../redux/user/userSlice';
+import { useSelector, useDispatch } from 'react-redux';
+
 const SignIn = () => {
 
   const [formData, SetFormData] = useState({});   
-  const [error, SetError] = useState(false);
-  const [loading, SetLoading] = useState(false);
+  const {error, loading} = useSelector((state)=> state.user);
   const [passwordType, SetPasswordType] = useState('password');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleFormData =(e)=>{
       SetFormData({...formData, [e.target.id]:e.target.value}
@@ -16,7 +19,7 @@ const SignIn = () => {
   const handleSubmit = async (e) =>{
     e.preventDefault();
     try{
-      SetLoading(true);
+      dispatch(signInStart());
       const response = await fetch('/api/auth/sign-in', {
         method:'POST',
         headers:{
@@ -26,19 +29,16 @@ const SignIn = () => {
       });
       
       const data = await response.json();
-      console.log(data);
-      SetLoading(false);
       
       if(data.success === false){
-        SetError(true);
+        dispatch(singInFailure(data.message));
         return;
       } 
-      SetError(false);
-      navigate('/home');
+      dispatch(signInSuccess(data));
+      navigate('/');
     }
     catch(error){
-      SetError(true);
-      SetLoading(false);
+      dispatch(singInFailure(error));
     }
     
   }
@@ -72,14 +72,14 @@ const SignIn = () => {
             else {
               SetPasswordType('password')
             }
-          }} type="button"  class="absolute top-1 end-0 p-3.5 rounded-e-md dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-            <svg class="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
-            <path class="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
-            <path class="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
-            <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"/>
-            <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
-            <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3"/>
+          }} type="button"  className="absolute top-1 end-0 p-3.5 rounded-e-md dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+            <svg className="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path className="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
+            <path className="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+            <path className="hs-password-active:hidden" d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+            <line className="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22"/>
+            <path className="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+            <circle className="hidden hs-password-active:block" cx="12" cy="12" r="3"/>
           </svg>
          </button>
         </div>
@@ -96,9 +96,9 @@ const SignIn = () => {
         </Link>
       </div>
 
-      {error && <p className='font-semibold 
+      <p className='font-semibold 
       text-red-800 mt-5'>
-      'Something went wrong!'</p> }  
+      {error ?  error || 'Something went wrong!':''}</p>   
       
     </div>
   )

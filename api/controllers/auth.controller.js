@@ -19,18 +19,24 @@ export const signup =  async (req, res, next) => {
 export const signin = async (req, res, next) => {
     const {email, password} = req.body;
     try{
+        if(!email || !password) throw (errorHandler('404', 'Credentials required'));
         const validUser = await User.findOne({email:email});
-        if(!validUser) next(errorHandler('404', 'User not found'));
+        if(!validUser) throw (errorHandler('404', 'User not found'));
         const validPassword = bcryptjs.compareSync(password,validUser.password);
-        if(!validPassword) next(errorHandler('401', 'Invalid credentials'));
+        
+        if(validPassword === false) {
+            throw errorHandler('401', 'Invalid credentials');
+        
+        }
         const token = jwt.sign({id: validUser._id}, process.env.JWT_SECRET);
         const {password: hashPassword , ...rest} = validUser._doc;
-        const expiryDate = new Date(Date.now()+3600000);
+        const expiryDate = new Date(Date.now()+3600000); 
         res
         .cookie('access_token', token, 
             {httpOnly: true, expires: expiryDate})
         .status(200)
         .json(rest);
+        
         
     }
     catch(err){
