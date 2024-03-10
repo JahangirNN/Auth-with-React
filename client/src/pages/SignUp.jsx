@@ -30,14 +30,14 @@ const SignUp = () => {
       SetLoading(false);
       
       if(data.success === false){
-        SetError(true);
+        SetError(data);
         return;
       } 
       SetError(false);
       navigate('/')
     }
     catch(error){
-      SetError(true);
+      SetError(error);
       SetLoading(false);
     }
     
@@ -55,19 +55,19 @@ const SignUp = () => {
 
         <input type='text' placeholder='Username'
         id='username' className='bg-slate-100 p-3
-        rounded-lg' 
+        rounded-lg' required
         onChange={handleFormData}/>
 
         <input type='text' placeholder='E-mail'
         id='email' className='bg-slate-100 p-3
-        rounded-lg' 
+        rounded-lg' required
         onChange={handleFormData}/>
 
         
         <div className='relative'>
           <input type={passwordType} placeholder='Password'
           id='password' className='py-3 px-4 block w-full bg-slate-100 p-3
-          rounded-lg' 
+          rounded-lg' required
           onChange={handleFormData}/>
 
           <button onClick={() => {

@@ -55,14 +55,14 @@ const SignIn = () => {
 
         <input type='text' placeholder='E-mail'
         id='email' className='bg-slate-100 p-3
-        rounded-lg' 
+        rounded-lg' required
         onChange={handleFormData}/>
 
         
         <div className='relative'>
           <input type={passwordType} placeholder='Password'
           id='password' className='py-3 px-4 block w-full bg-slate-100 p-3
-          rounded-lg' 
+          rounded-lg' required
           onChange={handleFormData}/>
 
           <button onClick={() => {
