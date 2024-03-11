@@ -43,15 +43,15 @@ const SignIn = () => {
     
   }
 
-
+  let str = ''
   return (
-    <div className='p-3 max-w-lg mx-auto'>
+    <div className=' p-3 max-w-lg mx-auto '>
 
       <h1 className='text-3xl text-center 
       font-semibold my-7'>
         Sign In</h1>
 
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+      <form onSubmit={handleSubmit} className='flex flex-col gap-4 '>
 
         <input type='text' placeholder='E-mail'
         id='email' className='bg-slate-100 p-3
@@ -61,7 +61,7 @@ const SignIn = () => {
         
         <div className='relative'>
           <input type={passwordType} placeholder='Password'
-          id='password' className='py-3 px-4 block w-full bg-slate-100 p-3
+          id='password' className='py-3 px-4 block w-full bg-slate-100  p-3
           rounded-lg' required
           onChange={handleFormData}/>
 
