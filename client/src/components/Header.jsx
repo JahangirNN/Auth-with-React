@@ -5,27 +5,31 @@ import DarkMode from './theme/darkMode.jsx';
 const Header = () => {
   return (
     <div className='bg-slate-200 dark:bg-gray-500'>
-        <div className='flex justify-between items-center
-        max-w-6xl mx-auto p-3'>
-            <Link to='/'>
-                <h1 className='font-bold dark:text-zinc-50'>Auth</h1>
-            </Link>
+        <div className="flex justify-between max-w-6xl mx-auto p-3">
             
-            <DarkMode />
-
-            <ul className='flex gap-4'>
+            <div className="flex items-center space-x-4">
                 <Link to='/'>
-                    <li className='dark:text-zinc-50'>Home</li>
+                    <h1 className='font-bold dark:text-zinc-50'>Auth</h1>
                 </Link>
+                <DarkMode />
+            </div>
 
-                <Link to="/about">
-                    <li className='dark:text-zinc-50'>About</li>
-                </Link>
+            
+            <div className="flex items-center space-x-4">
+                <ul className='flex gap-4'>
+                    <Link to='/'>
+                        <li className='dark:text-zinc-50'>Home</li>
+                    </Link>
 
-                <Link to="/sign-in">
-                    <li className='dark:text-zinc-50'>Sign In</li>
-                </Link>
-            </ul>
+                    <Link to="/about">
+                        <li className='dark:text-zinc-50'>About</li>
+                    </Link>
+
+                    <Link to="/sign-in">
+                        <li className='dark:text-zinc-50'>Sign In</li>
+                    </Link>
+                </ul>
+            </div>
         </div>
     </div>
     
