@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import DarkMode from './theme/darkMode.jsx';
-
+import { useSelector } from 'react-redux';
 const Header = () => {
+  const {currentUser} = useSelector((state)=>state.user);
   return (
     <div className='bg-slate-200 dark:bg-gray-500'>
         <div className="flex justify-between max-w-6xl mx-auto p-3">
@@ -25,8 +26,10 @@ const Header = () => {
                         <li className='dark:text-zinc-50'>About</li>
                     </Link>
 
-                    <Link to="/sign-in">
+                    <Link to="/profile">
+                        {currentUser ? <img src={currentUser.profilePicture} alt="" className='w-7 h-7 rounded-full object-cover' />:
                         <li className='dark:text-zinc-50'>Sign In</li>
+                        }
                     </Link>
                 </ul>
             </div>
