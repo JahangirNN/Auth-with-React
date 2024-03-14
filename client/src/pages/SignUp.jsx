@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import OAuth from '../components/OAuth';
 const SignUp = () => {
 
   const [formData, SetFormData] = useState({});   
@@ -45,10 +46,11 @@ const SignUp = () => {
 
 
   return (
-    <div className='p-3 max-w-lg mx-auto'>
+    <div className='dark:h-screen dark:bg-slate-700'>
+    <div className='h-screen p-3 max-w-lg mx-auto'>
 
       <h1 className='text-3xl text-center 
-      font-semibold my-7'>
+      font-semibold my-7 dark:text-white'>
         Sign Up</h1>
 
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
@@ -90,11 +92,13 @@ const SignUp = () => {
         </div>
         
         <button disabled={loading} className='bg-slate-700 text-white p-3
-        rounded-lg uppercase hover:opacity-95
-        disabled:opacity-60'>{loading? 'Loading...':'Sign-Up'}</button>
+        rounded-lg uppercase hover:opacity-85
+        disabled:opacity-60 dark:bg-black'>{loading? 'Loading...':'Sign-Up'}
+        </button>
+        <OAuth/>
       </form> 
       
-      <div className='flex gap-2 mt-5'>
+      <div className='flex gap-2 mt-5 dark:text-white'>
         <p>Have an Account?</p>
         <Link to={'/sign-in'}> 
         <span className='font-semibold text-blue-500'>Sign in</span>
@@ -105,6 +109,7 @@ const SignUp = () => {
       text-red-800 mt-5'>
       'Something went wrong!'</p> }  
       
+    </div>
     </div>
   )
 }
