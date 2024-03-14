@@ -56,14 +56,14 @@ const SignIn = () => {
 
         <input type='text' placeholder='E-mail'
         id='email' className='bg-slate-100 p-3
-        rounded-lg' required
+        rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-110' required
         onChange={handleFormData}/>
 
         
         <div className='relative'>
           <input type={passwordType} placeholder='Password'
           id='password' className='py-3 px-4 block w-full bg-slate-100  p-3
-          rounded-lg' required
+          rounded-lg shadow-md transform transition duration-300 ease-in-out hover:scale-110' required
           onChange={handleFormData}/>
 
           <button onClick={() => {
@@ -73,7 +73,8 @@ const SignIn = () => {
             else {
               SetPasswordType('password')
             }
-          }} type="button"  className="absolute top-1 end-0 p-3.5 rounded-e-md dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+          }} type="button"  className="absolute top-1 end-0 p-3.5 rounded-e-md dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 
+          transform transition duration-300 ease-in-out hover:scale-150">
             <svg className="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path className="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/>
             <path className="hs-password-active:hidden" d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
