@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useRef, useState } from "react";
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
 import {app} from '../firebase';
-import { updateUserFailure, updateUserStart, updateUserSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess } from "../redux/user/userSlice";
+import {signOut, updateUserFailure, updateUserStart, updateUserSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess } from "../redux/user/userSlice";
 
 const Profile = () => {
   const fileRef = useRef(null);
@@ -88,10 +88,17 @@ const Profile = () => {
       dispatch(deleteUserFailure(err));
     }
   }
+  const handleSignOut = async () => {
+    try{
+      await fetch(`/api/auth/sign-out`)
+      dispatch(signOut());
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
 
 
-  
-  
   return (    
     <div className=' dark:bg-slate-700'>
       <div className='p-3 max-w-lg mx-auto '>
@@ -132,9 +139,9 @@ const Profile = () => {
 
           <div className="flex justify-between mt-1">
           
-            <span onClick={handleDeleteAccount} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2.5 text-center me-5 mb-5">Delete Account</span>
+            <span onClick={handleDeleteAccount} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2.5 text-center me-5 mb-5 cursor-pointer">Delete Account</span>
           
-            <span className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2.5 text-center me-5 mb-5">Sign-out</span>
+            <span onClick={handleSignOut} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2.5 text-center me-5 mb-5 cursor-pointer">Sign-out</span>
           </div>
 
           </form>
