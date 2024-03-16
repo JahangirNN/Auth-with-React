@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { useEffect, useRef, useState } from "react";
 import {getDownloadURL, getStorage, ref, uploadBytesResumable} from 'firebase/storage';
 import {app} from '../firebase';
-import { updateUserFailure, updateUserStart, updateUserSuccess } from "../redux/user/userSlice";
+import { updateUserFailure, updateUserStart, updateUserSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess } from "../redux/user/userSlice";
 
 const Profile = () => {
   const fileRef = useRef(null);
@@ -69,6 +69,28 @@ const Profile = () => {
   const handleChange = (e) => {
     SetFormData({...formData, [e.target.id]:e.target.value})
   };
+
+  const handleDeleteAccount = async () => {
+    try{
+      dispatch(deleteUserStart());
+      const response = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method:'DELETE',
+      });
+      const data = await response.json();
+      if (data.success === false){
+        dispatch(deleteUserFailure(data));
+        return;
+      }
+      dispatch(deleteUserSuccess());
+      
+    }
+    catch(err){
+      dispatch(deleteUserFailure(err));
+    }
+  }
+
+
+  
   
   return (    
     <div className=' dark:bg-slate-700'>
@@ -110,7 +132,7 @@ const Profile = () => {
 
           <div className="flex justify-between mt-1">
           
-            <span className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2.5 text-center me-5 mb-5">Delete Account</span>
+            <span onClick={handleDeleteAccount} className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2.5 text-center me-5 mb-5">Delete Account</span>
           
             <span className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-3 py-2.5 text-center me-5 mb-5">Sign-out</span>
           </div>
