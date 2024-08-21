@@ -2,7 +2,8 @@ Certainly! Below is a merged version of the README content into a single file:
 
 ```markdown
 # React.js Authentication Project
-###    View here live: [https://auth-with-react.onrender.com/](https://auth-with-react.onrender.com/)
+
+   # View here live: [https://auth-with-react.onrender.com/](https://auth-with-react.onrender.com/)
 
 ## Overview
 
